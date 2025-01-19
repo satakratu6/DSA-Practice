@@ -1,0 +1,14 @@
+1)Function declaration/Prototype:
+i)Name
+2)Paramter
+3)Return
+Parameter passing techniques (It will receive copy of actual argument):
+Pass By Value: Original data remained save and unmodified,suitable for small data type only
+Pass By Reference: function receive reference of actual argument instead of copy its value. It directly modifies the original value.
+Pass by pointer: Address of actual argument is passed. Function receives a pointe rto the original variable. Using pointer, function can modify the actual data store that in the memory address.
+inline function: It is used to reduce the overhead of the function calls
+function overloading: It allows multiple functions to have the same name but with the different parameters
+operator overloading: It allows us to redefine the way operator works for user defined data type like class. It provides the ability to specify how operators behave when using operators
+	->Doesn't change the precedence/associativity
+	->::,sizeof,?->Doesn't overload
+	Important points: 1)Overloading is typically meant for 
