@@ -28,27 +28,22 @@ class Solution
 public:
   vector<int> twoSum(vector<int> &nums, int target)
   {
-    // Map to store the indices of the numbers we have seen so far
     unordered_map<int, int> numberIndexMap;
 
     for (int currentIndex = 0; currentIndex < nums.size(); ++currentIndex)
     {
       int currentNumber = nums[currentIndex];
 
-      // Calculate the number we need to reach the target
       int numberNeeded = target - currentNumber;
 
-      // Check if the needed number exists in the map
       if (numberIndexMap.find(numberNeeded) != numberIndexMap.end())
       {
         return {numberIndexMap[numberNeeded], currentIndex};
       }
 
-      // Store the current number and its index in the map
       numberIndexMap[currentNumber] = currentIndex;
     }
 
-    // Return an empty vector if no solution is found
     return {};
   }
 };
