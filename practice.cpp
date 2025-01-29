@@ -1,38 +1,57 @@
 #include <bits/stdc++.h>
 using namespace std;
-struct Node
+void merge(vector<int> &arr1, int s, int mid, int e)
 {
-  int data;
-  Node *next;
-  Node(int data) : data(data), next(nullptr) {}
-};
-class LinkedList
-{
-public:
-  Node *head;
-  LinkedList() : head(nullptr) {}
-  void insertAtFirst(int val)
+  vector<int> arr;
+  int i = s, j = mid + 1;
+  while (i <= mid && j <= e)
   {
-    Node *newNode = new Node(val);
-    if (head == nullptr)
+    if (arr1[i] < arr1[j])
     {
-      head = newNode;
-      head->next = head;
+      arr.push_back(arr1[i]);
+      i++;
     }
     else
     {
-      Node *temp = head;
-      while (temp->next != head)
-      {
-        temp = temp->next;
-      }
-      newNode->next = head;
-      temp->next = newNode;
-      head = newNode;
+      arr.push_back(arr1[j]);
+      j++;
     }
   }
-};
+  while (i <= mid)
+  {
+    arr.push_back(arr1[i]);
+    i++;
+  }
+  while (j <= e)
+  {
+    arr.push_back(arr1[j]);
+    j++;
+  }
+  for (int k = 0; k < arr.size(); k++)
+  {
+    arr1[s + k] = arr[k];
+  }
+
+  vector<int> array;
+}
+void mergeSort(vector<int> &v, int s, int e)
+{
+  if (s >= e)
+  {
+    return;
+  };
+  int mid = s + (e - s) / 2;
+  mergeSort(v, s, mid);
+  mergeSort(v, mid + 1, e);
+}
 int main()
 {
+  vector<int> v1 = {1, 3, 5, 7, 9};
+  vector<int> v2 = {2, 4, 6, 8, 10};
+  vector<int> v = merger(v1, v2);
+  for (int i = 0; i < v.size(); i++)
+  {
+    cout << v[i] << " ";
+  }
   return 0;
 }
