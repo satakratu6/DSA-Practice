@@ -1,6 +1,4 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
+#include <bits/stdc++.h>
 using namespace std;
 
 int partitionByHoareMethod(vector<int> &arr, int s, int r)
@@ -19,6 +17,10 @@ int partitionByHoareMethod(vector<int> &arr, int s, int r)
     {
       return right;
     }
+    //     If left < right, we swap arr[left] and arr[right] to ensure that:
+    // Elements smaller than p are on the left
+    // Elements greater than p are on the right
+    // This continues until left crosses right.
 
     swap(arr[left], arr[right]);
   }
@@ -35,7 +37,7 @@ void quicksort(vector<int> &arr, int s, int e)
 
 int main()
 {
-  vector<int> arr = {10, 7, 8, 9, 1, 5};
+  vector<int> arr = {5, 8, 9, 10, 1, 2, 20, 3};
   int n = arr.size();
   quicksort(arr, 0, n - 1);
   cout << "Sorted array: ";
@@ -44,5 +46,5 @@ int main()
     cout << arr[i] << " ";
   }
   cout << endl;
-      return 0;
+  return 0;
 }
