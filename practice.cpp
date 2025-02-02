@@ -1,57 +1,102 @@
 #include <bits/stdc++.h>
 using namespace std;
-void merge(vector<int> &arr1, int s, int mid, int e)
+
+struct Node
 {
-  vector<int> arr;
-  int i = s, j = mid + 1;
-  while (i <= mid && j <= e)
+  int data;
+  Node *next;
+  Node(int data) : data(data), next(nullptr) {}
+};
+
+class Queue
+{
+private:
+  Node *front;
+  Node *rear;
+  int sz;
+
+public:
+  Queue() : front(nullptr), rear(nullptr), sz(0) {}
+
+  ~Queue()
   {
-    if (arr1[i] < arr1[j])
+    while (front)
     {
-      arr.push_back(arr1[i]);
-      i++;
+      Node *temp = front;
+      front = front->next;
+      delete temp;
+    }
+  }
+
+  void enqueue(int val)
+  {
+    Node *temp = new Node(val);
+    if (rear == nullptr)
+    {
+      front = rear = temp;
     }
     else
     {
-      arr.push_back(arr1[j]);
-      j++;
+      rear->next = temp;
+      rear = temp;
     }
-  }
-  while (i <= mid)
-  {
-    arr.push_back(arr1[i]);
-    i++;
-  }
-  while (j <= e)
-  {
-    arr.push_back(arr1[j]);
-    j++;
-  }
-  for (int k = 0; k < arr.size(); k++)
-  {
-    arr1[s + k] = arr[k];
+    sz++;
   }
 
-  vector<int> array;
-}
-void mergeSort(vector<int> &v, int s, int e)
-{
-  if (s >= e)
+  void dequeue()
   {
-    return;
-  };
-  int mid = s + (e - s) / 2;
-  mergeSort(v, s, mid);
-  mergeSort(v, mid + 1, e);
-}
+    if (front == nullptr)
+    {
+      cout << "Underflow" << endl;
+      return;
+    }
+    Node *temp = front;
+    front = front->next;
+    delete temp;
+    sz--;
+
+    if (front == nullptr) // If queue becomes empty
+      rear = nullptr;
+  }
+
+  int peek()
+  {
+    return (front == nullptr) ? -1 : front->data;
+  }
+
+  int getSize()
+  {
+    return sz;
+  }
+
+  bool isEmpty()
+  {
+    return front == nullptr;
+  }
+};
+
 int main()
 {
-  vector<int> v1 = {1, 3, 5, 7, 9};
-  vector<int> v2 = {2, 4, 6, 8, 10};
-  vector<int> v = merger(v1, v2);
-  for (int i = 0; i < v.size(); i++)
+  Queue q;
+
+  q.enqueue(10);
+  q.enqueue(20);
+  q.enqueue(30);
+
+  cout << "Front element: " << q.peek() << endl;
+  cout << "Queue size: " << q.getSize() << endl;
+
+  q.dequeue();
+  cout << "Front element after dequeue: " << q.peek() << endl;
+  cout << "Queue size after dequeue: " << q.getSize() << endl;
+
+  while (!q.isEmpty())
   {
-    cout << v[i] << " ";
+    cout << "Dequeuing: " << q.peek() << endl;
+    q.dequeue();
   }
+
+  cout << "Queue empty? " << (q.isEmpty() ? "Yes" : "No") << endl;
+
   return 0;
 }

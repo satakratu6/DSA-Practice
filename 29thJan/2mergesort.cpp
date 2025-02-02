@@ -32,6 +32,10 @@ void merge(vector<int> &arr, int start, int mid, int end)
   {
     arr[k] = arr1[k - start];
   }
+  // for (int k = 0; k < temp.size(); k++)
+  // {
+  //   arr[left + k] = temp[k];
+  // }
 }
 void mergeSort(vector<int> &arr, int start, int end)
 {
