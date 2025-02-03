@@ -35,7 +35,7 @@ int search(int arr[], int low, int high, int e)
 {
   if (high >= low)
   {
-    int mid = (low + high) / 2;
+    int mid = low + (high - low) / 2;
     if (arr[mid] == e)
     {
       return mid;

@@ -29,6 +29,7 @@ public:
 
   void push(int ele)
   {
+    // new temp (new data will be taking head)
     Node *temp = new Node(ele);
     temp->next = head;
     head = temp;
