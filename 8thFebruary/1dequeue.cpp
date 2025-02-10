@@ -8,6 +8,7 @@ int main()
   // d.push_front(78);
   // d.pop_back();
   // d.pop_back();
+  d.pop_back():
   // cout << d.back();
   for (int i = 1; i <= 8; i++)
   {
