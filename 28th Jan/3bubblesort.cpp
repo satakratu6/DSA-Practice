@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-void binarySort(int arr[])
+void bubbleSort(int arr[])
 {
   bool s = false;
   for (int i = 0; i < 5; i++)

@@ -13,17 +13,16 @@ bool sSolver(vector<vector<char>> &board)
     {
       if (board[i][j] == '.')
       {
-        for (char a = 1; a <= '9'; a++)
+        for (char a = '1'; a <= '9'; a++)
         {
           board[i][j] = a;
-          if (isValid(board))
+          if (isValidSudoku(board))
           {
             bool response = sSolver(board);
-            // true
             return true;
           }
         }
-        board[i][j] = ".";
+        board[i][j] = '.';
         return false;
       }
     }

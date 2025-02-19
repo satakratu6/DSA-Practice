@@ -25,7 +25,7 @@ bool isValid(string s)
 }
 int main()
 {
-  string s = "({[])}";
+  string s = "(()){}";
   bool valid = isValid(s);
   if (valid == 0)
   {
