@@ -1,58 +1,56 @@
 #include <bits/stdc++.h>
 using namespace std;
-class Graph
+
+class Solution
 {
 public:
-  int vertices;
-  vector<vector<int>> edges;
-  Graph(int vertices)
+  void dfs(int node, int vis[], vector<int> adj[], vector<int> &it)
   {
-    vertices = vertices;
-    edges.resize(vertices);
-  }
-  void addEdge(int u, int v)
-  {
-    edges[u].push_back(v);
-    edges[v].push_back(u);
-  }
-  void BFS(int start)
-  {
-    vector<bool> visited(vertices, 0);
-    queue<int> q;
-    q.push(start);
-    visited[start] = true;
-    while (!q.empty())
+    vis[node] = 1;
+    it.push_back(node);
+    for (auto i : adj[node])
     {
-      int curr = q.front();
-      q.pop();
-      cout << curr << " ";
-      for (auto x : edges[curr])
+      if (!vis[i])
       {
-        if (!visited[x])
-        {
-          q.push(x);
-          visited[x] = true;
-        }
-      }
-    }
-    cout << endl;
-  }
-  void DFS_recursion(int start, vector<int> &visited)
-  {
-    visited[start] = true;
-    cout << start << " ";
-    for (auto x : edges[start])
-    {
-      if (!visited[x])
-      {
-        DFS_recursion(x, visited);
+        dfs(i, vis, adj, it);
       }
     }
   }
-  void DFS(int start)
+  vector<int> dfsoOfGraph(int v, vector<int> adj[])
   {
-    vector<int> visited(vertices, 0);
-    DFS_recursion(start, visited);
-    cout << endl;
+    int vis[v] = {0};
+    int start = 0;
+    vector<int> it;
+    return it;
   }
 };
+
+void addEdge(vector<int> adj[], int u, int v)
+{
+  adj[u].push_back(v);
+  adj[v].push_back(u);
+}
+
+void printAns(vector<int> &ans)
+{
+  for (int i = 0; i < ans.size(); i++)
+  {
+    cout << ans[i] << " ";
+  }
+}
+
+int main()
+{
+  vector<int> adj[5];
+
+  addEdge(adj, 0, 2);
+  addEdge(adj, 2, 4);
+  addEdge(adj, 0, 1);
+  addEdge(adj, 0, 3);
+
+  Solution obj;
+  vector<int> ans = obj.dfsOfGraph(5, adj);
+  printAns(ans);
+
+  return 0;
+}
