@@ -55,10 +55,10 @@ int main()
   // addEdge(adj, 2, 4);
   // addEdge(adj, 0, 1);
   // addEdge(adj, 0, 3);
-  addEdge(adj, 0, 3);
+  addEdge(adj, 0, 2);
+  addEdge(adj, 2, 4);
   addEdge(adj, 0, 1);
-  addEdge(adj, 1, 2);
-
+  addEdge(adj, 0, 3);
   Solution obj;
   vector<int> ans = obj.dfsOfGraph(5, adj);
   printAns(ans);
