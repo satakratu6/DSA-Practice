@@ -1,44 +1,44 @@
+// detect cycle in a directed graph
 #include <bits/stdc++.h>
 using namespace std;
 
 class Solution
 {
 private:
-  bool isDetect(int node, vector<vector<int>> &adj, vector<int> &visit, vector<int> &pathVisit)
+  bool isDetect(int node, vector<vector<int>> &adj, vector<int> &visited, vector<int> &pathVisited)
   {
-    visit[node] = 1;
-    pathVisit[node] = 1;
+    visited[node] = 1;
+    pathVisited[node] = 1;
+
     for (auto it : adj[node])
     {
-      if (!visit[it])
+      if (!visited[it])
       {
-        if (isDetect(it, adj, visit, pathVisit))
-        {
+        if (isDetect(it, adj, visited, pathVisited))
           return true;
-        }
-        else if (pathVisit[it])
-        {
-          return true;
-        }
+      }
+      else if (pathVisited[it]) // if already visited and in same path
+      {
+        return true;
       }
     }
-    pathVisit[node] = 0;
+
+    pathVisited[node] = 0; // Backtrack
     return false;
   }
 
 public:
   bool isCycle(vector<vector<int>> &adj, int V)
   {
-    vector<int> visit(V, 0);
-    vector<int> pathVisit(V, 0);
+    vector<int> visited(V, 0);
+    vector<int> pathVisited(V, 0);
+
     for (int i = 0; i < V; i++)
     {
-      if (!visit[i])
+      if (!visited[i])
       {
-        if (isDetect(i, adj, visit, pathVisit))
-        {
+        if (isDetect(i, adj, visited, pathVisited))
           return true;
-        }
       }
     }
     return false;
@@ -47,7 +47,7 @@ public:
 
 void addEdge(vector<vector<int>> &adj, int u, int v)
 {
-  adj[u].push_back(v);
+  adj[u].push_back(v); // Directed Graph: Only one direction
 }
 
 int main()

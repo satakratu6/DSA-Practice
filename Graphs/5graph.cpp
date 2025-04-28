@@ -1,28 +1,27 @@
+// detect cycle in an undirected graph
 #include <bits/stdc++.h>
 using namespace std;
 
 class Solution
 {
 private:
-  bool isDetect(int node, vector<vector<int>> &adj, vector<int> &visit, vector<int> &pathVisit)
+  bool isDetect(int node, int parent, vector<vector<int>> &adj, vector<int> &visit)
   {
     visit[node] = 1;
-    pathVisit[node] = 1;
     for (auto it : adj[node])
     {
       if (!visit[it])
       {
-        if (isDetect(it, adj, visit, pathVisit))
-        {
-          return true;
-        }
-        else if (pathVisit[it])
+        if (isDetect(it, node, adj, visit))
         {
           return true;
         }
       }
+      else if (it != parent)
+      {
+        return true;
+      }
     }
-    pathVisit[node] = 0;
     return false;
   }
 
@@ -30,15 +29,12 @@ public:
   bool isCycle(vector<vector<int>> &adj, int V)
   {
     vector<int> visit(V, 0);
-    vector<int> pathVisit(V, 0);
     for (int i = 0; i < V; i++)
     {
       if (!visit[i])
       {
-        if (isDetect(i, adj, visit, pathVisit))
-        {
+        if (isDetect(i, -1, adj, visit))
           return true;
-        }
       }
     }
     return false;
@@ -48,6 +44,7 @@ public:
 void addEdge(vector<vector<int>> &adj, int u, int v)
 {
   adj[u].push_back(v);
+  adj[v].push_back(u); // Undirected graph, so add both directions
 }
 
 int main()

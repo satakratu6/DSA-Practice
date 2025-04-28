@@ -54,10 +54,15 @@ int main()
 {
   vector<int> adj[6];
 
-  addEdge(adj, 0, 2);
-  addEdge(adj, 2, 4);
+  // addEdge(adj, 0, 2);
+  // addEdge(adj, 2, 4);
+  // addEdge(adj, 0, 1);
+  // addEdge(adj, 0, 3);
   addEdge(adj, 0, 1);
-  addEdge(adj, 0, 3);
+  addEdge(adj, 1, 2);
+  addEdge(adj, 2, 3);
+  addEdge(adj, 0, 4);
+  addEdge(adj, 3, 1);
 
   Solution obj;
   vector<int> ans = obj.bfsOfGraph(5, adj);
