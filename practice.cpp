@@ -1,67 +1,137 @@
 #include <bits/stdc++.h>
 using namespace std;
-
-class Solution
+class Tree
 {
-private:
-  bool isDetect(int node, vector<vector<int>> &adj, vector<int> &visit, vector<int> &pathVisit)
-  {
-    visit[node] = 1;
-    pathVisit[node] = 1;
-    for (auto it : adj[node])
-    {
-      if (!visit[it])
-      {
-        if (isDetect(it, adj, visit, pathVisit))
-        {
-          return true;
-        }
-        else if (pathVisit[it])
-        {
-          return true;
-        }
-      }
-    }
-    pathVisit[node] = 0;
-    return false;
-  }
-
 public:
-  bool isCycle(vector<vector<int>> &adj, int V)
+  int data;
+  Tree *left;
+  Tree *right;
+  Tree(int data) : data(data), left(nullptr), right(nullptr) {}
+};
+Tree *insert(Tree *root, int key)
+{
+  if (!root)
   {
-    vector<int> visit(V, 0);
-    vector<int> pathVisit(V, 0);
-    for (int i = 0; i < V; i++)
+    return new Tree(key);
+  }
+  if (root->data == key)
+  {
+    return root;
+  }
+  else if (root->data < key)
+  {
+    root->right = insert(root->right, key);
+  }
+  else
+  {
+    root->left = insert(root->left, key);
+  }
+  return root;
+}
+void inorder(Tree *root)
+{
+  if (!root)
+  {
+    return;
+  }
+  inorder(root->left);
+  cout << root->data << " ";
+  inorder(root->right);
+}
+void preorder(Tree *root)
+{
+  if (!root)
+  {
+    return;
+  }
+  cout << root->data << " ";
+  preorder(root->left);
+  preorder(root->right);
+}
+void postOrder(Tree *root)
+{
+  if (!root)
+  {
+    return;
+  }
+  preorder(root->left);
+  preorder(root->right);
+  cout << root->data << " ";
+}
+class solution
+{
+public:
+  vector<vector<int>> levelorder(Tree *root)
+  {
+    vector<vector<int>> ans;
+    if (!root)
     {
-      if (!visit[i])
-      {
-        if (isDetect(i, adj, visit, pathVisit))
-        {
-          return true;
-        }
-      }
+      return ans;
     }
-    return false;
+    queue<Tree *> q;
+    q.push(root);
+    while (!q.empty())
+    {
+      vector<int> levels;
+      int s = q.size();
+      for (int i = 0; i < s; i++)
+      {
+        Tree *node = q.front();
+        q.pop();
+        if (node->left)
+        {
+          q.push(node->left);
+        }
+        if (node->right)
+        {
+          q.push(node->right);
+        }
+        levels.push_back(node->data);
+      }
+      ans.push_back(levels);
+    }
+    return ans;
   }
 };
-
-void addEdge(vector<vector<int>> &adj, int u, int v)
+Tree *getSuccessor(Tree *curr)
 {
-  adj[u].push_back(v);
-}
-
-int main()
-{
-  int V, E;
-  cin >> V >> E;
-  vector<vector<int>> adj(V);
-  for (int i = 0; i < E; i++)
+  curr = curr->right;
+  while (curr && curr->left)
   {
-    int u, v;
-    cin >> u >> v;
-    addEdge(adj, u, v);
+    curr = curr->left;
   }
-  Solution obj;
-  bool result = obj.isCycle(adj, V);
-  cout << result;
+  return curr;
+}
+Treen *deleteNode(Tree *root, int key)
+{
+  if (!root)
+  {
+    return root;
+  }
+  if (root->data < key)
+  {
+    root->right = deleteNode(root->right, key);
+  }
+  else if (root->data > key)
+  {
+    root->left = deleteNode(root->left, key);
+  }
+  else
+  {
+    if (root->right == nullptr)
+    {
+      Tree *temp = root->left;
+      delete root;
+      return temp;
+    }
+    else if (root->left == nullptr)
+    {
+      Tree *temp = root->right;
+      delete root;
+      return temp;
+    }
+    Tree *succ = getSuccessor(root);
+    root->data = succ->data;
+    root->right = deleteNode(root->right, key);
+  }
 }

@@ -235,6 +235,7 @@ Node *deleteDuplicates(Node *head)
     delete dummy;
     return newHead;
 }
+
 // Main function to test
 int main()
 {
