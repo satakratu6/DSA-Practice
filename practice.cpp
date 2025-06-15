@@ -1,137 +1,40 @@
 #include <bits/stdc++.h>
 using namespace std;
-class Tree
+vector<int> merge(vector<int> &v1, vector<int> &v2)
 {
-public:
-  int data;
-  Tree *left;
-  Tree *right;
-  Tree(int data) : data(data), left(nullptr), right(nullptr) {}
-};
-Tree *insert(Tree *root, int key)
-{
-  if (!root)
+  int n1 = v1.size();
+  int n2 = v2.size();
+  int i = 0, j = 0;
+  vector<int> v;
+  while (i < n1 && j < n2)
   {
-    return new Tree(key);
-  }
-  if (root->data == key)
-  {
-    return root;
-  }
-  else if (root->data < key)
-  {
-    root->right = insert(root->right, key);
-  }
-  else
-  {
-    root->left = insert(root->left, key);
-  }
-  return root;
-}
-void inorder(Tree *root)
-{
-  if (!root)
-  {
-    return;
-  }
-  inorder(root->left);
-  cout << root->data << " ";
-  inorder(root->right);
-}
-void preorder(Tree *root)
-{
-  if (!root)
-  {
-    return;
-  }
-  cout << root->data << " ";
-  preorder(root->left);
-  preorder(root->right);
-}
-void postOrder(Tree *root)
-{
-  if (!root)
-  {
-    return;
-  }
-  preorder(root->left);
-  preorder(root->right);
-  cout << root->data << " ";
-}
-class solution
-{
-public:
-  vector<vector<int>> levelorder(Tree *root)
-  {
-    vector<vector<int>> ans;
-    if (!root)
+    if (v1[i] < v2[j])
     {
-      return ans;
+      v.push_back(v1[i++]);
     }
-    queue<Tree *> q;
-    q.push(root);
-    while (!q.empty())
+    else
     {
-      vector<int> levels;
-      int s = q.size();
-      for (int i = 0; i < s; i++)
-      {
-        Tree *node = q.front();
-        q.pop();
-        if (node->left)
-        {
-          q.push(node->left);
-        }
-        if (node->right)
-        {
-          q.push(node->right);
-        }
-        levels.push_back(node->data);
-      }
-      ans.push_back(levels);
+      v.push_back(v2[j++]);
     }
-    return ans;
   }
-};
-Tree *getSuccessor(Tree *curr)
-{
-  curr = curr->right;
-  while (curr && curr->left)
+  while (i < n1)
   {
-    curr = curr->left;
+    v.push_back(v1[i++]);
   }
-  return curr;
+  while (j < n2)
+  {
+    v.push_back(v2[j++]);
+  }
+  return v;
 }
-Treen *deleteNode(Tree *root, int key)
+int main()
 {
-  if (!root)
+  vector<int> v1 = {3, 1, 5, 8, 10};
+  vector<int> v2 = {8, 2, 12, 6, 7, 4};
+  vector<int> v;
+  v = merge(v1, v2);
+  for (int i = 0; i < v.size(); i++)
   {
-    return root;
-  }
-  if (root->data < key)
-  {
-    root->right = deleteNode(root->right, key);
-  }
-  else if (root->data > key)
-  {
-    root->left = deleteNode(root->left, key);
-  }
-  else
-  {
-    if (root->right == nullptr)
-    {
-      Tree *temp = root->left;
-      delete root;
-      return temp;
-    }
-    else if (root->left == nullptr)
-    {
-      Tree *temp = root->right;
-      delete root;
-      return temp;
-    }
-    Tree *succ = getSuccessor(root);
-    root->data = succ->data;
-    root->right = deleteNode(root->right, key);
+    cout << v[i] << " ";
   }
 }

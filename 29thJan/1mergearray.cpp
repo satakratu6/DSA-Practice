@@ -63,10 +63,7 @@ vector<int> merge(vector<int> v1, vector<int> v2)
   }
   return v;
 }
-void mergeSort(vector)
-{
-  if (start >= end)
-}
+
 // initial call from main >>0, n-1
 // params vector, s,e
 // base case->start>=E (terminate)
